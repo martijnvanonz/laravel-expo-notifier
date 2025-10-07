@@ -43,6 +43,10 @@ final class ExpoMessage implements Arrayable, Jsonable
     /** iOS only */
     public bool $mutableContent = false;
 
+    /** iOS only - for silent/background notifications */
+    public ?bool $_contentAvailable = null;
+
+
     public bool $shouldBatch = false;
 
     public static function create(): ExpoMessage
@@ -152,6 +156,13 @@ final class ExpoMessage implements Arrayable, Jsonable
         return $this;
     }
 
+    public function contentAvailable(bool $contentAvailable = true): self
+    {
+        $this->_contentAvailable = $contentAvailable;
+
+        return $this;
+    }
+
     public function shouldBatch(bool $shouldBatch = true): self
     {
         $this->shouldBatch = $shouldBatch;
@@ -173,6 +184,7 @@ final class ExpoMessage implements Arrayable, Jsonable
             'priority' => $this->priority,
             'channelId' => $this->channelId,
             'mutableContent' => $this->mutableContent,
+            '_contentAvailable' => $this->_contentAvailable,
         ];
     }
 
